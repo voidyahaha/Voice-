@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: sonder-audio-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    plan: standard
+    disk:
+      name: audio-work
+      mountPath: /var/lib/sonder
+      sizeGB: 50
+    envVars:
+      - key: PORT
+        value: "8000"
+      - key: AUDIO_DATA_DIR
+        value: /var/lib/sonder/audio
+      - key: DEMUCS_MODEL
+        value: htdemucs_ft
+      - key: JOB_WORKERS
+        value: "1"
+      - key: FIREBASE_STORAGE_BUCKET
+        value: vocal-separater-5eb7c.firebasestorage.app
+      - key: CORS_ORIGINS
+        sync: false
+      - key: GOOGLE_APPLICATION_CREDENTIALS
+        value: /etc/secrets/firebase-service-account.json
